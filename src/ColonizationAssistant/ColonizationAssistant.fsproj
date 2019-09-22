@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="SaveManagement.fs" />
     <EmbeddedResource Include="MainWindow.xaml" />
     <Compile Include="MainWindow.xaml.fs" />
     
