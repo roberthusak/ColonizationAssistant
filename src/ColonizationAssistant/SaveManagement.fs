@@ -11,7 +11,7 @@ let backupSavedGame (savePath:string) backupPath =
             None
         else
             revisions
-            |> Seq.max
+            |> Array.max
             |> Option.Some
 
     let nextRevisionNumber =
@@ -38,3 +38,7 @@ let watchGameSaves gamePath backupPath =
 
     watcher.Changed.Add(fun e -> backupSavedGame e.FullPath backupPath)
     ()
+
+let loadSavedGames backupPath =
+    Directory.GetFiles(backupPath, "*.SAV")
+    |> Array.map (fun filename -> (filename, File.ReadAllBytes(filename)))

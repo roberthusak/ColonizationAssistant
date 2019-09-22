@@ -17,7 +17,7 @@ type Program() =
             printfn "Expected arguments: [path to COLONIZE folder] [path to backup folder]"
         else
             SaveManagement.watchGameSaves argv.[0] argv.[1]
-            app.Run(new MainWindow())
+            app.Run(new MainWindow(argv.[1]))
 
     [<EntryPoint>]
     static let Main argv =

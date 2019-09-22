@@ -5,7 +5,7 @@ open Avalonia
 open Avalonia.Controls
 open Avalonia.Markup.Xaml
 
-type MainWindow () as this =
+type MainWindow (backupPath:string) as this =
     inherit Window()
 
     do
@@ -16,3 +16,9 @@ type MainWindow () as this =
 
     member this.InitializeComponent() =
         AvaloniaXamlLoader.Load(this)
+        this.Refresh()
+
+    member this.Refresh() =
+        this.DataContext <-
+            SaveManagement.loadSavedGames backupPath
+            |> Array.map (Utils.uncurry2 SaveFormat.parseSavedGame)

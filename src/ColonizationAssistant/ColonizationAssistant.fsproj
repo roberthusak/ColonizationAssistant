@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Utils.fs" />
+    <Compile Include="GameState.fs" />
+    <Compile Include="SaveFormat.fs" />
     <Compile Include="SaveManagement.fs" />
     <EmbeddedResource Include="MainWindow.xaml" />
     <Compile Include="MainWindow.xaml.fs" />
