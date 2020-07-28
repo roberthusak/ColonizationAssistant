@@ -39,7 +39,26 @@ module Date =
             let year = quadruplingFirstYear + (roundOffset / 4)
             { Season = season; Year = year }
 
+type Position = { X: int; Y: int }
 
-type GameState = { Filename: string; Difficulty: Difficulty; Round: int; Date: Date; NationInfo: NationInfo } with
+type Colony =
+    {
+        Name: string;
+        Nation: Nation;
+        Position: Position;
+        Population: int;
+    }
+
+type GameState =
+    {
+        Filename: string;
+        Difficulty: Difficulty;
+        Round: int;
+        Date: Date;
+        NationInfo: NationInfo;
+        Colonies: Colony[];
+    }
+    with
+
     member this.GameText =
         sprintf "%A %s of the %A, %A %d" this.Difficulty this.NationInfo.Explorer this.NationInfo.Nation this.Date.Season this.Date.Year
