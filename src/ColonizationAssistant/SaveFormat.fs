@@ -51,5 +51,6 @@ let parseSavedGame (filename:string) (contents:byte[]) =
         Filename = Path.GetFileName(filename);
         Difficulty = difficulty;
         Round = round;
+        Date = Date.fromRound round;
         NationInfo = nationInfo;
     }
