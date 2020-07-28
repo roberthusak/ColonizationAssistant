@@ -21,4 +21,5 @@ type MainWindow (backupPath:string) as this =
     member this.Refresh() =
         this.DataContext <-
             SaveManagement.loadSavedGames backupPath
+            |> Array.filter (fun (_, contents) -> contents.Length > 0)
             |> Array.map (Utils.uncurry2 SaveFormat.parseSavedGame)
