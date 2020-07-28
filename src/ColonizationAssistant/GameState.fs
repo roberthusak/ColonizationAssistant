@@ -8,7 +8,7 @@ type NationInfo = { Nation: Nation; Explorer: string; Country: string; AI: bool 
 
 type Season = Spring = 0 | Summer = 1 | Autumn = 2 | Winter = 4
 
-type Date = Season * int
+type Date = { Season: Season; Year: int }
 
 module Date =
     let private startYear = 1492
@@ -17,7 +17,7 @@ module Date =
 
     let fromRound round =
         if round < (doublingFirstYear - startYear) then
-            Date (Season.Spring, round + startYear)
+            { Season = Season.Spring; Year = round + startYear }
         else if round < (doublingFirstYear - startYear + 200) then
             let roundOffset = round - (doublingFirstYear - startYear)
             let season =
@@ -26,7 +26,7 @@ module Date =
                 | 1 -> Season.Autumn
                 | _ -> failwith "Unreachable"
             let year = doublingFirstYear + (roundOffset / 2)
-            Date (season, year)
+            { Season = season; Year = year }
         else
             let roundOffset = round - (doublingFirstYear - startYear + 200)
             let season =
@@ -37,6 +37,9 @@ module Date =
                 | 3 -> Season.Winter
                 | _ -> failwith "Unreachable"
             let year = quadruplingFirstYear + (roundOffset / 4)
-            Date (season, year)
+            { Season = season; Year = year }
 
-type GameState = { Filename: string; Difficulty: Difficulty; Round: int; Date: Date; NationInfo: NationInfo }
+
+type GameState = { Filename: string; Difficulty: Difficulty; Round: int; Date: Date; NationInfo: NationInfo } with
+    member this.GameText =
+        sprintf "%A %s of the %A, %A %d" this.Difficulty this.NationInfo.Explorer this.NationInfo.Nation this.Date.Season this.Date.Year

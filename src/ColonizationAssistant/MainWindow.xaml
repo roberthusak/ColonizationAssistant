@@ -10,6 +10,12 @@
       Watching for saved games...
     </TextBlock>
     <Button Content="Refresh" Command="{Binding $parent[Window].Refresh}" Grid.Row="1" />
-    <ListBox Grid.Row="2" Items="{Binding $parent.DataContext}" />
+    <ListBox Grid.Row="2" Items="{Binding $parent.DataContext}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding GameText}"/>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
   </Grid>
 </Window>
