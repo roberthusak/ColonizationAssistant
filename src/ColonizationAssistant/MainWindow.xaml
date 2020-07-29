@@ -2,20 +2,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ca="clr-namespace:ColonizationAssistant"
         mc:Ignorable="d" Width="500" Height="400"
         x:Class="ColonizationAssistant.MainWindow"
         Title="Colonization Assistant">
-  <Grid RowDefinitions="50,30,*">
+  <Grid RowDefinitions="50,30,*" ColumnDefinitions="300,*">
     <TextBlock TextAlignment="Center" VerticalAlignment="Center">
       Watching for saved games...
     </TextBlock>
     <Button Content="Refresh" Command="{Binding $parent[Window].Refresh}" Grid.Row="1" />
-    <ListBox Grid.Row="2" Items="{Binding $parent.DataContext}">
+    <ListBox Name="saves" Grid.Row="2" Items="{Binding $parent.DataContext}">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <TextBlock Text="{Binding GameText}"/>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>
+    <Slider Name="zoomer" Grid.Column="1" Value="1" Minimum="1" Maximum="64" />
+    <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"
+                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+      <LayoutTransformControl Classes="screen pdf">
+        <LayoutTransformControl.LayoutTransform>
+          <ScaleTransform ScaleX="{Binding Value, ElementName=zoomer}" ScaleY="{Binding Value, ElementName=zoomer}"/>
+        </LayoutTransformControl.LayoutTransform>
+        <ItemsControl Items="{Binding #saves.SelectedItem.Colonies}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <Canvas ClipToBounds="True" Width="56" Height="70" Background="DarkBlue" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.DataTemplates>
+            <DataTemplate DataType="{x:Type ca:Colony}">
+              <Rectangle Fill="White" Width="1" Height="1" />
+            </DataTemplate>
+          </ItemsControl.DataTemplates>
+          <ItemsControl.Styles>
+            <Style Selector="ItemsControl > ContentPresenter">
+              <Setter Property="Canvas.Left" Value="{Binding Position.X}" />
+              <Setter Property="Canvas.Top" Value="{Binding Position.Y}" />
+            </Style>
+          </ItemsControl.Styles>
+        </ItemsControl>
+      </LayoutTransformControl>
+    </ScrollViewer>
   </Grid>
 </Window>
