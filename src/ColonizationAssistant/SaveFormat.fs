@@ -88,4 +88,5 @@ let parseSavedGame (filename:string) (contents:byte[]) =
         Date = Date.fromRound round;
         NationInfo = nationInfo;
         Colonies = colonies;
+        Map = GameMap.create colonies;
     }

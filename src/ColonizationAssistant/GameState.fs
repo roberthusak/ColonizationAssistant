@@ -49,6 +49,22 @@ type Colony =
         Population: int;
     }
 
+type GameMap =
+    {
+        Width: int;
+        Height: int;
+        Objects: obj[];
+    }
+
+module GameMap =
+    let create (colonies:Colony[]) =
+        {
+            // TODO: Load from file if variable
+            Width = 56;
+            Height = 70;
+            Objects = colonies |> Array.map (fun c -> c :> obj);
+        }
+
 type GameState =
     {
         Filename: string;
@@ -57,6 +73,7 @@ type GameState =
         Date: Date;
         NationInfo: NationInfo;
         Colonies: Colony[];
+        Map: GameMap;
     }
     with
 
